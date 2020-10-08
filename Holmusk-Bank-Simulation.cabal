@@ -1,0 +1,85 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 8e2069abd0a6faf58a98dbbbc2dfc4a25a09c5eb4459a9ca0eb20e524c4084de
+
+name:           Holmusk-Bank-Simulation
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/Github username here/Holmusk-Bank-Simulation#readme>
+homepage:       https://github.com/Github username here/Holmusk-Bank-Simulation#readme
+bug-reports:    https://github.com/Github username here/Holmusk-Bank-Simulation/issues
+author:         Author name here
+maintainer:     Author email here
+copyright:      2019 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/Github username here/Holmusk-Bank-Simulation
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_Holmusk_Bank_Simulation
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , streamly      == 0.7.2
+    , random        == 1.2.0
+    , transformers  == 0.5.6.2
+    , monad-control == 1.0.2.3
+    , exceptions    == 0.10.4
+    , containers    == 0.6.2.1
+    , text          == 1.2.4.0
+    , MissingH      == 1.4.3.0
+  default-language: Haskell2010
+
+executable Holmusk-Bank-Simulation-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_Holmusk_Bank_Simulation
+    , StatisticsLogger
+    , Statistics
+    , BankSimulation
+    , Customer
+    , RuntimeException
+    , Auxiliary
+  hs-source-dirs:
+      app
+    , src
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      Holmusk-Bank-Simulation
+    , base >=4.7 && <5
+    , streamly      == 0.7.2
+    , random        == 1.2.0
+    , transformers  == 0.5.6.2
+    , monad-control == 1.0.2.3
+    , exceptions    == 0.10.4
+    , containers    == 0.6.2.1
+    , text          == 1.2.4.0
+    , MissingH      == 1.4.3.0
+  default-language: Haskell2010
+
+test-suite Holmusk-Bank-Simulation-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_Holmusk_Bank_Simulation
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      Holmusk-Bank-Simulation
+    , base >=4.7 && <5
+  default-language: Haskell2010
