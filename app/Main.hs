@@ -19,17 +19,16 @@ import Text.Read   (readMaybe)
 import Text.Printf (printf)
 
 {- "Control" library import(s). -}
-import Control.Monad (when)
+import Control.Monad          (when)
 import Control.Exception.Base (throw, try, SomeException)
 
 {- Local import(s). -}
 import           RuntimeException         (RuntimeException(..))
 import qualified StatisticsLogger as SLog (
-  CustomerCase(..),
   printAvgAndMaxWaitingTimes,
   printAvgAndMaxQueueLengths,
   printLowestAvgAndMaxWaitingTimesAbsDiff)
-import qualified Customer                 (yellowType, redType)
+import qualified Customer                 (Type(..), yellowTypeGenerator, redTypeGenerator)
 
 {-------------------------------------------------------------------------------------}
 {--------------------------------- SOURCE SECTION   ----------------------------------}
@@ -58,9 +57,9 @@ main = do
 
       putStrLn "\nBank simulation commencing..."
       prg <- getStdGen
-      SLog.printAvgAndMaxWaitingTimes SLog.Yellow simTime prg Customer.yellowType
-      SLog.printAvgAndMaxQueueLengths SLog.Red simTime prg Customer.redType
-      SLog.printLowestAvgAndMaxWaitingTimesAbsDiff simTime prg
+      SLog.printAvgAndMaxWaitingTimes Customer.Yellow simTime prg Customer.yellowTypeGenerator
+      SLog.printAvgAndMaxQueueLengths Customer.Red    simTime prg Customer.redTypeGenerator
+      SLog.printLowestAvgAndMaxWaitingTimesAbsDiff    simTime prg
       putStrLn "\nBank simulation concluded."
     )
   when (isLeft res) (printf "Error: %s" $ show (fromLeft res :: SomeException))

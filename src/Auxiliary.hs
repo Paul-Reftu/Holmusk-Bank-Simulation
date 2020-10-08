@@ -10,5 +10,6 @@ import System.Random (StdGen)
 type SimulationTime        = Integer
 type PseudoRandomGenerator = StdGen
 
+{- Paul Reftu: Euler's number. -}
 e :: Double
 e = 2.71828

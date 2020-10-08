@@ -27,7 +27,6 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
   other-modules:
       Paths_Holmusk_Bank_Simulation
   hs-source-dirs:

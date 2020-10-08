@@ -1,5 +1,4 @@
 module StatisticsLogger (
-  CustomerCase(..),
   printAvgAndMaxWaitingTimes,
   printAvgAndMaxQueueLengths,
   printLowestAvgAndMaxWaitingTimesAbsDiff
@@ -10,36 +9,30 @@ import Text.Printf (printf)
 
 {- Local import(s). -}
 import           Auxiliary  (SimulationTime, PseudoRandomGenerator)
-import qualified Customer   (Generator, yellowType, redType, blueType)
+import qualified Customer   (Type(..), TypeGenerator, yellowTypeGenerator, redTypeGenerator, blueTypeGenerator)
 import qualified Statistics (avgAndMaxWaitingTimes, avgAndMaxQueueLengths, avgAndMaxWaitingTimesAbsDiff)
 
-data CustomerCase
-  = Yellow
-  | Red
-  | Blue
-  deriving (Show)
-
 printAvgAndMaxWaitingTimes
-  :: CustomerCase
+  :: Customer.Type
   -> SimulationTime
   -> PseudoRandomGenerator
-  -> Customer.Generator
+  -> Customer.TypeGenerator
   -> IO ()
-printAvgAndMaxWaitingTimes customerCase simTime prg customerGen = do
-  printf "\n[Case %s] Obtaining average and maximum waiting times...\n" (show customerCase)
-  (avgTime, maxTime) <- Statistics.avgAndMaxWaitingTimes simTime prg customerGen
-  printf "[Case %s] Success. Here are the results: (avgTime: %.2fs, maxTime: %.2fs).\n" (show customerCase) avgTime maxTime
+printAvgAndMaxWaitingTimes customerType simTime prg customerTypeGen = do
+  printf "\n[Case %s] Obtaining average and maximum waiting times...\n" (show customerType)
+  (avgTime, maxTime) <- Statistics.avgAndMaxWaitingTimes simTime prg customerTypeGen
+  printf "[Case %s] Success. Here are the results: (avgTime: %.2fs, maxTime: %.2fs).\n" (show customerType) avgTime maxTime
 
 printAvgAndMaxQueueLengths
-  :: CustomerCase
+  :: Customer.Type
   -> SimulationTime
   -> PseudoRandomGenerator
-  -> Customer.Generator
+  -> Customer.TypeGenerator
   -> IO ()
-printAvgAndMaxQueueLengths customerCase simTime prg customerGen = do
-  printf "\n[Case %s] Obtaining average and maximum queue lengths...\n" (show customerCase)
-  (avgLength, maxLength) <- Statistics.avgAndMaxQueueLengths simTime prg customerGen
-  printf "[Case %s] Success. Here are the results: (avgLength: %.2f, maxLength: %.2f).\n" (show customerCase) avgLength maxLength
+printAvgAndMaxQueueLengths customerType simTime prg customerTypeGen = do
+  printf "\n[Case %s] Obtaining average and maximum queue lengths...\n" (show customerType)
+  (avgLength, maxLength) <- Statistics.avgAndMaxQueueLengths simTime prg customerTypeGen
+  printf "[Case %s] Success. Here are the results: (avgLength: %.2f, maxLength: %.2f).\n" (show customerType) avgLength maxLength
 
 printLowestAvgAndMaxWaitingTimesAbsDiff
   :: SimulationTime
@@ -48,9 +41,9 @@ printLowestAvgAndMaxWaitingTimesAbsDiff
 printLowestAvgAndMaxWaitingTimesAbsDiff simTime prg = do
   printf "\nObtaining lowest absolute difference between average and maximum waiting times from all customer types...\n"
 
-  yellow_avgAndMaxTimesAbsDiff <- Statistics.avgAndMaxWaitingTimesAbsDiff simTime prg Customer.yellowType
-  red_avgAndMaxTimesAbsDiff    <- Statistics.avgAndMaxWaitingTimesAbsDiff simTime prg Customer.redType
-  blue_avgAndMaxTimesAbsDiff   <- Statistics.avgAndMaxWaitingTimesAbsDiff simTime prg Customer.blueType
+  yellow_avgAndMaxTimesAbsDiff <- Statistics.avgAndMaxWaitingTimesAbsDiff simTime prg Customer.yellowTypeGenerator
+  red_avgAndMaxTimesAbsDiff    <- Statistics.avgAndMaxWaitingTimesAbsDiff simTime prg Customer.redTypeGenerator
+  blue_avgAndMaxTimesAbsDiff   <- Statistics.avgAndMaxWaitingTimesAbsDiff simTime prg Customer.blueTypeGenerator
 
   printf ("Success. Here are the results: \n"
     <> "[Case Yellow] Absolute difference b/w avg and max waiting times: %.2fs\n"
